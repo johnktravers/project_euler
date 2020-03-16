@@ -1,5 +1,7 @@
-class Multiple
+require('minitest/autorun')
+require('minitest/pride')
 
+class MultipleTest < Minitest::Test
   # Iterate from 1 to max_value
   # Initialize sum to 0
   # If divisible by 3 or 5
@@ -13,5 +15,11 @@ class Multiple
     end
 
     sum
+  end
+
+  def test_multiples_of_3_and_5
+    assert_equal 23, multiples_of_3_and_5(10)
+    assert_equal 2318, multiples_of_3_and_5(100)
+    assert_equal 233168, multiples_of_3_and_5(1000)
   end
 end
