@@ -3,7 +3,10 @@ require 'minitest/pride'
 
 class LargestGridProductTest < Minitest::Test
   def largest_grid_product(grid, n)
-
+    row_max = max_product(grid, 0, n)
+    col_max = max_product(columns(grid), row_max, n)
+    diags = diagonals(grid).find_all { |diag| diag.length >= n }
+    max_product(diags, col_max, n)
   end
 
   #--------------------- Tests ---------------------#
@@ -11,9 +14,69 @@ class LargestGridProductTest < Minitest::Test
   def test_largest_grid_product
     assert_equal 72, largest_grid_product(example_grid, 2)
     assert_equal 504, largest_grid_product(example_grid, 3)
+    assert_equal 70600674, largest_grid_product(grid, 4)
+  end
+
+  def test_max_product
+    assert_equal 504, max_product(example_grid, 0, 3)
+    assert_equal 3024, max_product(example_grid, 0, 4)
+  end
+
+  def test_columns
+    assert_equal 5, columns(example_grid).length
+    assert_equal [1, 6, 5, 0, 3], columns(example_grid).first
+    assert_equal [5, 0, 2, 9, 2], columns(example_grid).last
+  end
+
+  def test_diagonals
+    assert_equal 14, diagonals(example_grid).length
+    assert_equal [0, 2], diagonals(example_grid).first
+    assert_equal [2, 6], diagonals(example_grid).last
   end
 
   #----------------- Helper Methods -----------------#
+
+  def max_product(grid, current_max, n)
+    max_product = current_max
+
+    grid.each do |row|
+      row.each_with_index do |num, i|
+        if row[i + (n - 1)]
+          product = row[i..(i + (n - 1))].inject(:*)
+          max_product = product if product > max_product
+        end
+      end
+    end
+
+    max_product
+  end
+
+  def columns(grid)
+    n = grid.length
+    cols = Array.new(n) { Array.new }
+
+    n.times do |i|
+      grid.each { |row| cols[i].push(row[i]) }
+    end
+
+    cols
+  end
+
+  # https://gist.github.com/EvilScott/1755729
+
+  def diagonals(grid)
+    [grid, grid.map(&:reverse)].inject([]) do |all_diags, matrix|
+      ((-matrix.count + 1)..matrix.first.count).each do |offet_index|
+        diagonal = []
+        (matrix.count).times do |row_index|
+          col_index = offet_index + row_index
+          diagonal << matrix[row_index][col_index] if col_index >= 0
+        end
+        all_diags << diagonal.compact if diagonal.compact.count > 1
+      end
+      all_diags
+    end
+  end
 
   def example_grid
     [
