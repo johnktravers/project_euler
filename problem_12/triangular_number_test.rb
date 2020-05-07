@@ -15,7 +15,7 @@ class TriangularNumberTest < Minitest::Test
   end
 
   def num_divisors(n)
-    (1..n).count { |i| n % i == 0 }
+    (1..(n / 2)).count { |i| n % i == 0 } + 1
   end
 
   #----------------- Tests -----------------#
