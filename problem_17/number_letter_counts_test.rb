@@ -3,7 +3,10 @@ require 'minitest/pride'
 
 class NumberLetterCountsTest < Minitest::Test
   def number_letter_count(max_num)
+    str = ''
+    (1..max_num).each { |num| str += number_to_words(num) }
 
+    str.gsub(/\W+/, '').length
   end
 
   def number_to_words(num)
@@ -30,7 +33,9 @@ class NumberLetterCountsTest < Minitest::Test
   #----------------- Tests -----------------#
 
   def test_number_letter_count
-    # assert_equal 19, number_letter_count(5)
+    assert_equal 19,    number_letter_count(5)
+    assert_equal 9769,  number_letter_count(500)
+    assert_equal 21124, number_letter_count(1000)
   end
 
   def test_number_to_words
