@@ -9,13 +9,15 @@ class NumberLetterCountsTest < Minitest::Test
   def number_to_words(num)
     digs = num.to_s
     tens = digs[-2..-1].to_i
+    ones = digs[-1].to_i
     str = ''
 
     str += "#{ONES[digs[-4].to_i]} thousand " if digs[-4] && digs[-4] != '0'
     str += "#{ONES[digs[-3].to_i]} hundred "  if digs[-3] && digs[-3] != '0'
+    str += 'and ' if str.include?('hundred') && tens > 0
 
-    if tens > 0 && tens < 10
-      str += ONES[tens]
+    if tens < 10 && ones > 0
+      str += ONES[ones]
     elsif (tens >= 10 && tens <= 20) || (tens >= 20 && tens % 10 == 0)
       str += TENS[tens]
     elsif tens > 0
@@ -32,12 +34,13 @@ class NumberLetterCountsTest < Minitest::Test
   end
 
   def test_number_to_words
-    assert_equal 'one thousand',             number_to_words(1000)
-    assert_equal 'one thousand thirty-four', number_to_words(1034)
-    assert_equal 'one hundred sixty',        number_to_words(160)
-    assert_equal 'five hundred seventy-two', number_to_words(572)
-    assert_equal 'twelve',                   number_to_words(12)
-    assert_equal 'eight hundred two',        number_to_words(802)
+    assert_equal 'one thousand',                 number_to_words(1000)
+    assert_equal 'one thousand thirty-four',     number_to_words(1034)
+    assert_equal 'one hundred and sixty',        number_to_words(160)
+    assert_equal 'five hundred and seventy-two', number_to_words(572)
+    assert_equal 'twelve',                       number_to_words(12)
+    assert_equal 'eight hundred and two',        number_to_words(802)
+    assert_equal 'four',                         number_to_words(4)
   end
 
   #----------------- Constants -----------------#
