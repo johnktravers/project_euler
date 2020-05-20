@@ -3,26 +3,27 @@ require 'minitest/pride'
 
 class MaximumPathSumTest < Minitest::Test
   def max_path_sum(triangle)
-    count = 0
-    prev_index = 0
+    reverse_triangle = triangle.reverse
 
-    triangle.each do |row|
-      low_index =  [prev_index - 1, 0].max
-      high_index = [prev_index + 1, row.length - 1].min
-      value = row[low_index..high_index].max
-
-      count += value
-      prev_index = row.index(value)
+    reverse_triangle.each_with_index do |row, i|
+      if reverse_triangle[i + 1]
+        row.each_with_index do |num, j|
+          if row[j + 1]
+            max = [num, row[j + 1]].max
+            reverse_triangle[i + 1][j] += max
+          end
+        end
+      else
+        return row.first
+      end
     end
-
-    count
   end
 
   #----------------- Tests -----------------#
 
   def test_max_path_sum
     assert_equal 23,    max_path_sum(EXAMPLE_TRIANGLE)
-    assert_equal 1088,  max_path_sum(TRIANGLE)
+    assert_equal 1074,  max_path_sum(TRIANGLE)
   end
 
   #----------------- Constants -----------------#
