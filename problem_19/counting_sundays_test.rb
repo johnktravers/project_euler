@@ -8,6 +8,7 @@ class CountingSundaysTest < Minitest::Test
 
   def first_sunday(year)
     day = 7
+    total_days = 0
     leap_count = 0
     non_leap_count = 0
 
@@ -18,10 +19,11 @@ class CountingSundaysTest < Minitest::Test
         non_leap_count += 1
       end
 
-      day += 7 until day > ((366 * leap_count) + (365 * non_leap_count))
+      total_days = (366 * leap_count) + (365 * non_leap_count)
+      day += 7 until day > total_days
     end
 
-    day % ((366 * leap_count) + (365 * non_leap_count))
+    day - total_days
   end
 
   def leap_year?(year)
