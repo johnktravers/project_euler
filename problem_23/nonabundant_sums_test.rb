@@ -2,7 +2,16 @@ require 'minitest/test'
 require 'minitest/autorun'
 
 class NonabundantSumsTest < Minitest::Test
-  def nonabundant_sums(max_num)
+  def nonabundant_sums
+    abundants = []
+    sum = 0
+
+    (1..28123).each do |num|
+      abundants.push(num) if abundant?(num)
+      sum += num if !sum_of_two_abundants?(num, abundants)
+    end
+
+    sum
   end
 
   def sum_of_two_abundants?(num, abundants)
@@ -31,9 +40,7 @@ class NonabundantSumsTest < Minitest::Test
   #----------------- Tests -----------------#
 
   def test_nonabundant_sums
-    skip
-    assert_equal 504,   nonabundant_sums(1000)
-    assert_equal 31626, nonabundant_sums(10000)
+    assert_equal 4179871, nonabundant_sums
   end
 
   def test_sum_of_two_abundants
@@ -53,5 +60,6 @@ class NonabundantSumsTest < Minitest::Test
   def test_divisor_sum
     assert_equal 28, divisor_sum(28)
     assert_equal 16, divisor_sum(12)
+    assert_equal 55, divisor_sum(36)
   end
 end
