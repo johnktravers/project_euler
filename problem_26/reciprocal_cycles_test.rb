@@ -7,7 +7,9 @@ class ReciprocalCyclesTest < Minitest::Test
   end
 
   def reciprocal_cycle_length(num)
-
+    decimals = (1 / num.to_f).to_s.split('.')[1]
+    dec_indices = Hash.new { |h,k| h[k] = Array.new }
+    decimals.chars.each_with_index { |dig, i| dec_indices[dig].push(i) }
   end
 
   #----------------- Tests -----------------#
