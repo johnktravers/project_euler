@@ -10,6 +10,21 @@ class ReciprocalCyclesTest < Minitest::Test
     decimals = (1 / num.to_f).to_s.split('.')[1]
     dec_indices = Hash.new { |h,k| h[k] = Array.new }
     decimals.chars.each_with_index { |dig, i| dec_indices[dig].push(i) }
+
+    length = 0
+
+    dec_indices.each do |dig, indices|
+      return 0 if indices.length == 1
+      count = 0
+      until count == indices.length - 1
+        new_length = indices[count + 1] - indices[count]
+        return 0 if count >= 1 && new_length != length
+        length = new_length
+        count += 1
+      end
+    end
+
+    length
   end
 
   #----------------- Tests -----------------#
