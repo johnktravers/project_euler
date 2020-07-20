@@ -1,0 +1,23 @@
+{
+  "name": "project_euler",
+  "version": "1.0.0",
+  "description": "Contained in this repository are my solutions to archived [Project Euler](https://projecteuler.net/) problems. This is a sort of playground where I will explore problem solving techniques in different languages. I hope to solve each problem in Ruby, Python, JavaScript, Golang, and C++.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage --runInBand --detectOpenHandles"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnktravers/project_euler.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johnktravers/project_euler/issues"
+  },
+  "homepage": "https://github.com/johnktravers/project_euler#readme",
+  "devDependencies": {
+    "jest": "^26.1.0"
+  }
+}
