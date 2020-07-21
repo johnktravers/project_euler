@@ -8,7 +8,7 @@ function multiplesOfThreeAndFive(max_num) {
   return sum;
 }
 
-test('multiplesOfThreeAndFive', () => {
+test("multiplesOfThreeAndFive", () => {
   expect(multiplesOfThreeAndFive(10)).toBe(23);
   expect(multiplesOfThreeAndFive(100)).toBe(2318);
   expect(multiplesOfThreeAndFive(1000)).toBe(233168);
